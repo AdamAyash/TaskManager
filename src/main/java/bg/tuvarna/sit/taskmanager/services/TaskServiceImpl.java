@@ -1,27 +1,34 @@
 package bg.tuvarna.sit.taskmanager.services;
 
+import bg.tuvarna.sit.taskmanager.dto.TaskDto;
 import bg.tuvarna.sit.taskmanager.models.Task;
 import bg.tuvarna.sit.taskmanager.repository.TaskRepository;
 import bg.tuvarna.sit.taskmanager.repository.impl.TaskRepositoryImpl;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class TaskServiceImpl implements TaskService{
-  private TaskRepository taskRepository;
 
-  public TaskServiceImpl()
+  private TaskRepository taskRepository;
+  private ModelMapper modelMapper;
+
+  public TaskServiceImpl(ModelMapper modelMapper)
   {
       this.taskRepository = TaskRepositoryImpl.getInstance();
+      this.modelMapper = modelMapper;
   }
   @Override
-  public boolean createTask(Task task) {
+  public Task createTask(TaskDto taskDto) {
+      Task task = modelMapper.map(taskDto, Task.class);
      return taskRepository.createTask(task);
   }
 
     @Override
-    public Task getTaskById(int id) {
+    public TaskDto getTaskById(int id) {
         return taskRepository.getTaskById(id);
     }
 
@@ -36,7 +43,13 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public List<Task> getAllTasks() {
-        return taskRepository.getAllTasks();
+    public List<TaskDto> getAllTasks() {
+     List<Task> tasksList =  taskRepository.getAllTasks();
+     List<TaskDto> taskDtoList = new ArrayList<TaskDto>();
+
+        for (TaskDto currentTask : taskDtoList) {
+            taskDtoList.add(modelMapper.map(currentTask, Task.class));
+        }
+        return taskDtoList;
     }
 }

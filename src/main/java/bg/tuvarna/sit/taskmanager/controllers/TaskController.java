@@ -1,6 +1,6 @@
 package bg.tuvarna.sit.taskmanager.controllers;
 
-import bg.tuvarna.sit.taskmanager.models.Task;
+import bg.tuvarna.sit.taskmanager.models;
 import bg.tuvarna.sit.taskmanager.services.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,37 +10,40 @@ import java.util.List;
 
 @RestController
 public class TaskController {
-  private TaskService taskService;
+  private final TaskService taskService;
 
   public TaskController(TaskService taskService){
     this.taskService = taskService;
   }
 
   @PostMapping("/api/tasks")
-  public ResponseEntity<Task> createTask(@RequestBody Task task){
-    ResponseEntity<Task> response;
+  public ResponseEntity<TaskDto> createTask(@RequestBody TaskDto task){
+    ResponseEntity<TaskDto> response;
 
     if(!taskService.createTask(task))
       response = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    else
+      response = new ResponseEntity<>(task, HttpStatus.CREATED);
 
-    return  new ResponseEntity<>(task, HttpStatus.CREATED);
+    return response;
   }
 
   @GetMapping("/api/task/{id}")
-  public ResponseEntity<Task> getTask(@PathVariable int id){
-    ResponseEntity<Task> response;
+  public ResponseEntity<TaskDto> getTask(@PathVariable int id){
+    ResponseEntity<TaskDto> response;
 
-    Task task =  taskService.getTaskById(id);
+    TaskDto task =  taskService.getTaskById(id);
     if(task == null)
       response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    else{
+      response = new ResponseEntity<>(task, HttpStatus.OK);
+    }
 
-    return new ResponseEntity<>(task, HttpStatus.OK);
+    return response;
   }
 
-  @GetMapping("/api/task/all}")
-  public ResponseEntity<List<Task>> getAllTasks(){
-    ResponseEntity<Task> response;
-
+  @GetMapping("/api/task/all")
+  public ResponseEntity<List<TaskDto>> getAllTasks(){
     return new ResponseEntity<>(taskService.getAllTasks(), HttpStatus.OK);
   }
 }

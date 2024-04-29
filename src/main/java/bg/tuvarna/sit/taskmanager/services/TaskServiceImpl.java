@@ -1,7 +1,7 @@
 package bg.tuvarna.sit.taskmanager.services;
 
 import bg.tuvarna.sit.taskmanager.dto.TaskDto;
-import bg.tuvarna.sit.taskmanager.models.Task;
+import bg.tuvarna.sit.taskmanager.domain_models.Task;
 import bg.tuvarna.sit.taskmanager.repository.TaskRepository;
 import bg.tuvarna.sit.taskmanager.repository.impl.TaskRepositoryImpl;
 import org.modelmapper.ModelMapper;
@@ -22,14 +22,14 @@ public class TaskServiceImpl implements TaskService{
       this.modelMapper = modelMapper;
   }
   @Override
-  public Task createTask(TaskDto taskDto) {
+  public boolean createTask(TaskDto taskDto) {
       Task task = modelMapper.map(taskDto, Task.class);
      return taskRepository.createTask(task);
   }
 
     @Override
     public TaskDto getTaskById(int id) {
-        return taskRepository.getTaskById(id);
+        return modelMapper.map(taskRepository.getTaskById(id), TaskDto.class);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class TaskServiceImpl implements TaskService{
      List<Task> tasksList =  taskRepository.getAllTasks();
      List<TaskDto> taskDtoList = new ArrayList<TaskDto>();
 
-        for (TaskDto currentTask : taskDtoList) {
-            taskDtoList.add(modelMapper.map(currentTask, Task.class));
+        for (Task currentTask : tasksList) {
+            taskDtoList.add(modelMapper.map(currentTask, TaskDto.class));
         }
         return taskDtoList;
     }

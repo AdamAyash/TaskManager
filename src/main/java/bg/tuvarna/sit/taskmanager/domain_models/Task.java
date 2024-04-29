@@ -1,4 +1,4 @@
-package bg.tuvarna.sit.taskmanager.models;
+package bg.tuvarna.sit.taskmanager.domain_models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

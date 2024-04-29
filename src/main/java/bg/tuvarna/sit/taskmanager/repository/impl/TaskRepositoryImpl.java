@@ -1,6 +1,6 @@
 package bg.tuvarna.sit.taskmanager.repository.impl;
 
-import bg.tuvarna.sit.taskmanager.models.Task;
+import bg.tuvarna.sit.taskmanager.domain_models.Task;
 import bg.tuvarna.sit.taskmanager.repository.TaskRepository;
 
 import java.util.ArrayList;

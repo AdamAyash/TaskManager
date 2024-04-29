@@ -1,6 +1,6 @@
 package bg.tuvarna.sit.taskmanager.controllers;
 
-import bg.tuvarna.sit.taskmanager.models;
+import bg.tuvarna.sit.taskmanager.dto.TaskDto;
 import bg.tuvarna.sit.taskmanager.services.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

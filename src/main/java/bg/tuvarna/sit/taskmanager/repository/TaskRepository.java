@@ -1,6 +1,6 @@
 package bg.tuvarna.sit.taskmanager.repository;
 
-import bg.tuvarna.sit.taskmanager.models.Task;
+import bg.tuvarna.sit.taskmanager.domain_models.Task;
 
 import java.util.List;
 

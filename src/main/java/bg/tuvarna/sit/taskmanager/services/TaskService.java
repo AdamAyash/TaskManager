@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface TaskService {
   boolean createTask(final TaskDto task);
-  TaskDto getTaskById(final int id);
+  TaskDto getTaskById(final Long id);
   boolean updateTask(final Task task);
-  boolean deleteTaskById(final int id);
+  boolean deleteTaskById(final Long id);
   List<TaskDto> getAllTasks();
 
 }

@@ -29,7 +29,7 @@ public class TaskController {
   }
 
   @GetMapping("/api/task/{id}")
-  public ResponseEntity<TaskDto> getTask(@PathVariable int id){
+  public ResponseEntity<TaskDto> getTask(@PathVariable long id){
     ResponseEntity<TaskDto> response;
 
     TaskDto task =  taskService.getTaskById(id);

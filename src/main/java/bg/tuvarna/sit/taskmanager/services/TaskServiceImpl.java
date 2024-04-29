@@ -3,7 +3,6 @@ package bg.tuvarna.sit.taskmanager.services;
 import bg.tuvarna.sit.taskmanager.dto.TaskDto;
 import bg.tuvarna.sit.taskmanager.domain_models.Task;
 import bg.tuvarna.sit.taskmanager.repository.TaskRepository;
-import bg.tuvarna.sit.taskmanager.repository.impl.TaskRepositoryImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -16,35 +15,38 @@ public class TaskServiceImpl implements TaskService{
   private TaskRepository taskRepository;
   private ModelMapper modelMapper;
 
-  public TaskServiceImpl(ModelMapper modelMapper)
+  public TaskServiceImpl(ModelMapper modelMapper, TaskRepository taskRepository)
   {
-      this.taskRepository = TaskRepositoryImpl.getInstance();
+      this.taskRepository = taskRepository;
       this.modelMapper = modelMapper;
   }
   @Override
   public boolean createTask(TaskDto taskDto) {
       Task task = modelMapper.map(taskDto, Task.class);
-     return taskRepository.createTask(task);
+        taskRepository.save(task);
+        return true;
   }
 
     @Override
-    public TaskDto getTaskById(int id) {
-        return modelMapper.map(taskRepository.getTaskById(id), TaskDto.class);
+    public TaskDto getTaskById(Long id) {
+        return modelMapper.map(taskRepository.findById(id), TaskDto.class);
     }
 
     @Override
     public boolean updateTask(Task task) {
-        return taskRepository.updateTask(task);
+        return true;
     }
 
     @Override
-    public boolean deleteTaskById(int id) {
-        return taskRepository.deleteTaskById(id);
+    public boolean deleteTaskById(Long id) {
+      taskRepository.deleteById(id);
+
+      return true;
     }
 
     @Override
     public List<TaskDto> getAllTasks() {
-     List<Task> tasksList =  taskRepository.getAllTasks();
+     List<Task> tasksList =  taskRepository.findAll();
      List<TaskDto> taskDtoList = new ArrayList<TaskDto>();
 
         for (Task currentTask : tasksList) {

@@ -1,14 +1,11 @@
 package bg.tuvarna.sit.taskmanager.repository;
 
 import bg.tuvarna.sit.taskmanager.domain_models.Task;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
-public interface TaskRepository {
-  boolean createTask(Task task);
-  Task getTaskById(final int id);
-  boolean updateTask(final Task task);
-  List<Task> getAllTasks();
-  boolean deleteTaskById(final int id);
+@Repository
+public interface TaskRepository extends JpaRepository<Task, Long> {
 
 }

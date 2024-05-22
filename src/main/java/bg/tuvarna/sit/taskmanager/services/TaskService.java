@@ -10,5 +10,4 @@ public interface TaskService {
   boolean updateTask(final Task task);
   boolean deleteTaskById(final Long id);
   List<TaskDto> getAllTasks();
-
 }
